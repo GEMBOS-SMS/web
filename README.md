@@ -1,2 +1,2 @@
-# web
+# GEMBOS Website
 GEMBOS Website
