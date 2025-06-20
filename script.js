@@ -80,7 +80,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 email: 'string', 
                 phoneNumber: 'string',
                 password: 'string',
-                publicKey: 'string'
+                publicKey: 'string',
+                bio: 'string'
             },
             response: {
                 success: true,
@@ -88,10 +89,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 data: {
                     accessToken: 'string',
                     refreshToken: 'string',
+                    tokenType: 'string',
+                    expiresIn: 86400000,
                     user: {
                         id: 1,
                         username: 'string',
-                        email: 'string'
+                        email: 'string',
+                        phoneNumber: 'string',
+                        isVerified: false
                     }
                 }
             }
@@ -110,11 +115,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 data: {
                     accessToken: 'string',
                     refreshToken: 'string',
+                    tokenType: 'Bearer',
                     expiresIn: 86400000,
                     user: {
                         id: 1,
                         username: 'string',
-                        email: 'string'
+                        email: 'string',
                     }
                 }
             }

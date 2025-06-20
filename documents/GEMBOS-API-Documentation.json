@@ -1,0 +1,1255 @@
+{
+	"info": {
+		"_postman_id": "c3e15b25-fcd0-4329-af93-b50511b464f0",
+		"name": "GEMBOS API Collection",
+		"description": "Complete GEMBOS (Global Encrypted Mobile-Based Obscured SMS Application) API endpoints with examples and documentation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23843285",
+		"_collection_link": "https://gembos.postman.co/workspace/GEMBOS_API~14adc201-647b-4f7a-b552-8e573027e2cc/collection/23843285-c3e15b25-fcd0-4329-af93-b50511b464f0?action=share&source=collection_link&creator=23843285"
+	},
+	"item": [
+		{
+			"name": "🔐 Authentication",
+			"item": [
+				{
+					"name": "Register New User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (responseCode.code === 200) {",
+									"    const response = pm.response.json();",
+									"    pm.collectionVariables.set('accessToken', response.data.accessToken);",
+									"    pm.collectionVariables.set('refreshToken', response.data.refreshToken);",
+									"    pm.collectionVariables.set('userId', response.data.user.id);",
+									"    console.log('Tokens saved to collection variables');",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"girayaksakal1\",\n  \"email\": \"girayaksakal@icloud.com\",\n  \"phoneNumber\": \"+905533521756\",\n  \"password\": \"SecurePassword123!\",\n  \"publicKey\": \"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE...\",\n  \"bio\": \"Test user for GEMBOS application\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						},
+						"description": "Register a new user account\n\n**Required Fields:**\n- username: 3-50 characters\n- email: Valid email address\n- phoneNumber: E.164 format (+1234567890)\n- password: Min 8 chars with uppercase, lowercase, digit, special char\n- publicKey: Base64 encoded ECC public key\n\n**Optional:**\n- bio: User biography"
+					},
+					"response": [
+						{
+							"name": "Successful Registration",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"username\": \"girayaksakal1\",\n  \"email\": \"girayaksakal@icloud.com\",\n  \"phoneNumber\": \"+905533521756\",\n  \"password\": \"SecurePassword123!\",\n  \"publicKey\": \"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE...\",\n  \"bio\": \"Test user for GEMBOS application\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"register"
+									]
+								},
+								"description": "Register a new user account\n\n**Required Fields:**\n- username: 3-50 characters\n- email: Valid email address\n- phoneNumber: E.164 format (+1234567890)\n- password: Min 8 chars with uppercase, lowercase, digit, special char\n- publicKey: Base64 encoded ECC public key\n\n**Optional:**\n- bio: User biography"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\n  \"success\": true,\n  \"message\": \"User registered successfully\",\n  \"data\": {\n    \"accessToken\": \"eyJhbGciOiJIUzUxMiJ9...\",\n    \"refreshToken\": \"550e8400-e29b-41d4-a716-446655440000\",\n    \"tokenType\": \"Bearer\",\n    \"expiresIn\": 86400000,\n    \"user\": {\n      \"id\": 1,\n      \"username\": \"testuser\",\n      \"email\": \"test@example.com\",\n      \"phoneNumber\": \"+1234567890\",\n      \"isVerified\": false\n    }\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "Login User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (responseCode.code === 200) {",
+									"    const response = pm.response.json();",
+									"    pm.collectionVariables.set('accessToken', response.data.accessToken);",
+									"    pm.collectionVariables.set('refreshToken', response.data.refreshToken);",
+									"    pm.collectionVariables.set('userId', response.data.user.id);",
+									"    console.log('Login successful - tokens updated');",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"SecurePassword123!\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						},
+						"description": "Authenticate user and get access token\n\n**Required:**\n- email: Registered email address\n- password: User password\n\n**Returns:**\n- accessToken: Use in Authorization header\n- refreshToken: Use to get new access token\n- user: User profile information"
+					},
+					"response": [
+						{
+							"name": "Successful Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"SecurePassword123!\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								},
+								"description": "Authenticate user and get access token\n\n**Required:**\n- email: Registered email address\n- password: User password\n\n**Returns:**\n- accessToken: Use in Authorization header\n- refreshToken: Use to get new access token\n- user: User profile information"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\n  \"success\": true,\n  \"message\": \"Login successful\",\n  \"data\": {\n    \"accessToken\": \"eyJhbGciOiJIUzUxMiJ9...\",\n    \"refreshToken\": \"550e8400-e29b-41d4-a716-446655440000\",\n    \"tokenType\": \"Bearer\",\n    \"expiresIn\": 86400000,\n    \"user\": {\n      \"id\": 1,\n      \"username\": \"testuser\",\n      \"email\": \"test@example.com\",\n      \"lastSeen\": \"2025-06-09T10:30:00Z\"\n    }\n  }\n}"
+						},
+						{
+							"name": "Login User",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"girayaksakal@icloud.com\",\n  \"password\": \"SecurePassword123!\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 16 Jun 2025 23:38:37 GMT"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31536000 ; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Login successful\",\n    \"data\": {\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnaXJheWFrc2FrYWxAaWNsb3VkLmNvbSIsImlhdCI6MTc1MDExNzExNywiZXhwIjoxNzUyNzA5MTE3fQ.oK8x9La9n-ko4egQteHQRHvo4q-8PYHuztyEug6gf08\",\n        \"refreshToken\": \"05325b3b-4f4b-4778-977f-ac072ce6fc86\",\n        \"tokenType\": null,\n        \"expiresIn\": 2592000000,\n        \"user\": {\n            \"id\": 5,\n            \"username\": \"girayaksakal\",\n            \"email\": \"girayaksakal@icloud.com\",\n            \"phoneNumber\": \"+905533521756\",\n            \"publicKey\": \"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE...\",\n            \"profilePictureUrl\": null,\n            \"bio\": \"Test user for GEMBOS application\",\n            \"isActive\": true,\n            \"isVerified\": true,\n            \"lastSeen\": \"2025-06-16T23:38:37.434260268\",\n            \"createdAt\": \"2025-06-16T23:36:49.707271\"\n        }\n    },\n    \"error\": null,\n    \"timestamp\": \"2025-06-16T23:38:37.477360929\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Refresh Access Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (responseCode.code === 200) {",
+									"    const response = pm.response.json();",
+									"    pm.collectionVariables.set('accessToken', response.data.accessToken);",
+									"    pm.collectionVariables.set('refreshToken', response.data.refreshToken);",
+									"    console.log('Tokens refreshed successfully');",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/refresh",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"refresh"
+							]
+						},
+						"description": "Get new access token using refresh token\n\n**Use when:**\n- Access token expires (24 hours)\n- Getting 401 Unauthorized errors\n\n**Returns:**\n- New access token\n- New refresh token (old one is invalidated)"
+					},
+					"response": []
+				},
+				{
+					"name": "Logout User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						},
+						"description": "Logout user and invalidate refresh token\n\n**Effect:**\n- Invalidates the provided refresh token\n- User must login again to get new tokens"
+					},
+					"response": []
+				}
+			],
+			"description": "User registration, login, and token management endpoints"
+		},
+		{
+			"name": "📱 OTP Management",
+			"item": [
+				{
+					"name": "Generate Email OTP",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"identifier\": \"test@example.com\",\n  \"otpType\": \"EMAIL_VERIFICATION\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/otp/generate",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"otp",
+								"generate"
+							]
+						},
+						"description": "Generate and send OTP to email\n\n**OTP Types:**\n- EMAIL_VERIFICATION: Verify email address\n- PASSWORD_RESET: Reset password\n- LOGIN_VERIFICATION: 2FA login\n- PHONE_VERIFICATION: Verify phone number\n\n**OTP expires in 5 minutes**"
+					},
+					"response": []
+				},
+				{
+					"name": "Generate SMS OTP",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"identifier\": \"+905533521756\",\n  \"otpType\": \"PHONE_VERIFICATION\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/otp/generate",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"otp",
+								"generate"
+							]
+						},
+						"description": "Generate and send OTP via SMS\n\n**Requires:**\n- Twilio configuration in application.yml\n- Valid phone number in E.164 format\n\n**Note:** SMS charges apply through Twilio"
+					},
+					"response": []
+				},
+				{
+					"name": "Verify OTP",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"identifier\": \"+905533521756\",\n  \"otpCode\": \"391675\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/otp/verify",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"otp",
+								"verify"
+							]
+						},
+						"description": "Verify OTP code\n\n**Security Features:**\n- OTP expires in 5 minutes\n- Maximum 3 attempts before lockout\n- One-time use only\n\n**For EMAIL_VERIFICATION:**\n- Automatically marks user as verified\n- Enables full account access"
+					},
+					"response": []
+				}
+			],
+			"description": "One-Time Password generation and verification for email/SMS"
+		},
+		{
+			"name": "👤 User Management",
+			"item": [
+				{
+					"name": "Get Current User Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users/me",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"me"
+							]
+						},
+						"description": "Get current authenticated user's profile\n\n**Returns:**\n- Complete user information\n- Verification status\n- Last seen timestamp\n- Public key for encryption"
+					},
+					"response": [
+						{
+							"name": "User Profile",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{accessToken}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/users/me",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"me"
+									]
+								},
+								"description": "Get current authenticated user's profile\n\n**Returns:**\n- Complete user information\n- Verification status\n- Last seen timestamp\n- Public key for encryption"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": 1,\n    \"username\": \"testuser\",\n    \"email\": \"test@example.com\",\n    \"phoneNumber\": \"+1234567890\",\n    \"publicKey\": \"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE...\",\n    \"bio\": \"Test user for GEMBOS\",\n    \"isActive\": true,\n    \"isVerified\": true,\n    \"lastSeen\": \"2025-06-09T10:30:00Z\",\n    \"createdAt\": \"2025-06-09T09:00:00Z\"\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get User by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users/2",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"2"
+							]
+						},
+						"description": "Get any user's public profile by ID\n\n**Use for:**\n- Getting contact information\n- Retrieving public keys for encryption\n- Viewing user profiles\n\n**Privacy:** Only public information is returned"
+					},
+					"response": []
+				},
+				{
+					"name": "Search Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users/search?query=test&page=0&size=20",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"search"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "test",
+									"description": "Search term (username, email, or phone)"
+								},
+								{
+									"key": "page",
+									"value": "0",
+									"description": "Page number (0-based)"
+								},
+								{
+									"key": "size",
+									"value": "20",
+									"description": "Number of results per page"
+								}
+							]
+						},
+						"description": "Search for users by username, email, or phone number\n\n**Search Fields:**\n- Username (partial match)\n- Email (partial match)\n- Phone number (partial match)\n\n**Pagination:**\n- Default: 20 results per page\n- Use page parameter for pagination"
+					},
+					"response": [
+						{
+							"name": "Search Results",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{accessToken}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/users/search?query=test&page=0&size=20",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"search"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "test",
+											"description": "Search term (username, email, or phone)"
+										},
+										{
+											"key": "page",
+											"value": "0",
+											"description": "Page number (0-based)"
+										},
+										{
+											"key": "size",
+											"value": "20",
+											"description": "Number of results per page"
+										}
+									]
+								},
+								"description": "Search for users by username, email, or phone number\n\n**Search Fields:**\n- Username (partial match)\n- Email (partial match)\n- Phone number (partial match)\n\n**Pagination:**\n- Default: 20 results per page\n- Use page parameter for pagination"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\n  \"success\": true,\n  \"data\": {\n    \"content\": [\n      {\n        \"id\": 2,\n        \"username\": \"testuser2\",\n        \"email\": \"test2@example.com\",\n        \"phoneNumber\": \"+1234567891\",\n        \"publicKey\": \"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE...\",\n        \"isActive\": true,\n        \"isVerified\": true\n      }\n    ],\n    \"totalElements\": 1,\n    \"totalPages\": 1,\n    \"size\": 20,\n    \"number\": 0\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get All Active Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users?page=0&size=20",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "20"
+								}
+							]
+						},
+						"description": "Get list of all active users\n\n**Use for:**\n- Contact discovery\n- User directory\n- Finding users to message\n\n**Returns only active and verified users**"
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"updated_username\",\n  \"bio\": \"Updated bio for my profile\",\n  \"profilePictureUrl\": \"https://example.com/profile.jpg\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/profile",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"profile"
+							]
+						},
+						"description": "Update current user's profile\n\n**Updatable Fields:**\n- username (must be unique)\n- bio\n- profilePictureUrl\n\n**Cannot Update:**\n- email\n- phoneNumber\n- publicKey\n- verification status"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Last Seen",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users/last-seen",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"last-seen"
+							]
+						},
+						"description": "Update user's last seen timestamp\n\n**Use for:**\n- Activity tracking\n- Online status\n- App usage analytics\n\n**Called automatically on login**"
+					},
+					"response": []
+				}
+			],
+			"description": "User profile, search, and management endpoints"
+		},
+		{
+			"name": "💬 Message Management",
+			"item": [
+				{
+					"name": "Send Encrypted Message",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"recipientId\": 1,\n  \"encryptedContent\": \"KBP6mc7KWYBJM0yXE+DWKsXnB4cBiw27Qo9g\",\n  \"contentHash\": \"b94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde9\",\n  \"transmissionMode\": \"SMS\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/messages/send",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"messages",
+								"send"
+							]
+						},
+						"description": "Send encrypted message to another user\n\n**Fields:**\n- recipientId: Target user ID\n- encryptedContent: Message encrypted with shared secret\n- contentHash: SHA-256 hash for integrity verification\n- transmissionMode: INTERNET or SMS\n\n**Message Flow:**\n1. Encrypt message using ECC shared secret\n2. Generate content hash\n3. Send via API (fallback if SMS fails)\n4. Store for logging and retrieval"
+					},
+					"response": [
+						{
+							"name": "Message Sent",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{accessToken}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"recipientId\": 1,\n  \"encryptedContent\": \"KBP6mc7KWYBJM0yXE+DWKsXnB4cBiw27Qo9g\",\n  \"contentHash\": \"b94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde9\",\n  \"transmissionMode\": \"SMS\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/messages/send",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"messages",
+										"send"
+									]
+								},
+								"description": "Send encrypted message to another user\n\n**Fields:**\n- recipientId: Target user ID\n- encryptedContent: Message encrypted with shared secret\n- contentHash: SHA-256 hash for integrity verification\n- transmissionMode: INTERNET or SMS\n\n**Message Flow:**\n1. Encrypt message using ECC shared secret\n2. Generate content hash\n3. Send via API (fallback if SMS fails)\n4. Store for logging and retrieval"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\n  \"success\": true,\n  \"message\": \"Message sent successfully\",\n  \"data\": {\n    \"id\": 1,\n    \"senderId\": 1,\n    \"recipientId\": 2,\n    \"encryptedContent\": \"U2FsdGVkX1+vupppZksvRf5pq5g5XjFRIipRkwB0K1Y96Qsv2Lm+31cmzaAILwyt\",\n    \"contentHash\": \"a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3\",\n    \"transmissionMode\": \"INTERNET\",\n    \"messageStatus\": \"SENT\",\n    \"isRead\": false,\n    \"createdAt\": \"2025-06-09T10:45:00Z\"\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "Retrieve Message by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/messages/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"messages",
+								"1"
+							]
+						},
+						"description": "Get specific message by ID\n\n**Access Control:**\n- Only sender or recipient can access\n- Automatically marks as read for recipient\n- Updates message status to READ\n\n**Use for:**\n- Message decryption\n- Read receipt tracking\n- Message verification"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Conversation Messages",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/messages/conversation/2?page=0&size=50",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"messages",
+								"conversation",
+								"2"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "50"
+								}
+							]
+						},
+						"description": "Get all messages between current user and another user\n\n**Parameters:**\n- otherUserId: ID of the other participant\n- page: Page number (0-based)\n- size: Messages per page (default 50)\n\n**Order:** Latest messages first\n**Use for:** Chat history, conversation view"
+					},
+					"response": [
+						{
+							"name": "Conversation Messages",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{accessToken}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/messages/conversation/2?page=0&size=50",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"messages",
+										"conversation",
+										"2"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "50"
+										}
+									]
+								},
+								"description": "Get all messages between current user and another user\n\n**Parameters:**\n- otherUserId: ID of the other participant\n- page: Page number (0-based)\n- size: Messages per page (default 50)\n\n**Order:** Latest messages first\n**Use for:** Chat history, conversation view"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\n  \"success\": true,\n  \"data\": {\n    \"content\": [\n      {\n        \"id\": 2,\n        \"senderId\": 2,\n        \"recipientId\": 1,\n        \"encryptedContent\": \"U2FsdGVkX1+vupppZksvRf5pq5g5XjFRIipRkwB0K1Y96Qsv2Lm+31cmzaAILwyt\",\n        \"transmissionMode\": \"INTERNET\",\n        \"messageStatus\": \"READ\",\n        \"isRead\": true,\n        \"createdAt\": \"2025-06-09T10:50:00Z\"\n      },\n      {\n        \"id\": 1,\n        \"senderId\": 1,\n        \"recipientId\": 2,\n        \"encryptedContent\": \"U2FsdGVkX1+vupppZksvRf5pq5g5XjFRIipRkwB0K1Y96Qsv2Lm+31cmzaAILwyt\",\n        \"transmissionMode\": \"INTERNET\",\n        \"messageStatus\": \"SENT\",\n        \"isRead\": false,\n        \"createdAt\": \"2025-06-09T10:45:00Z\"\n      }\n    ],\n    \"totalElements\": 2,\n    \"totalPages\": 1\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get User Messages (All)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/messages?page=0&size=50",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"messages"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "50"
+								}
+							]
+						},
+						"description": "Get all messages for current user (sent and received)\n\n**Use for:**\n- Message overview\n- Inbox functionality\n- Message search\n\n**Order:** Latest messages first"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Logged Messages (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/messages/logged?masterKey={{masterKey}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"messages",
+								"logged"
+							],
+							"query": [
+								{
+									"key": "masterKey",
+									"value": "{{masterKey}}",
+									"description": "Master key from application.yml"
+								}
+							]
+						},
+						"description": "Get logged messages with master key (Admin function)\n\n**Security:**\n- Requires master key from application.yml\n- Only returns last 30 days of sent messages\n- For compliance and debugging\n\n**Use Cases:**\n- Legal compliance\n- System debugging\n- Administrative oversight\n\n**⚠️ High Security:** Protect master key!"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Unread Message Count",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/messages/unread/count",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"messages",
+								"unread",
+								"count"
+							]
+						},
+						"description": "Get count of unread messages for current user\n\n**Use for:**\n- Badge notifications\n- UI indicators\n- Push notification decisions\n\n**Returns:** Simple count number"
+					},
+					"response": [
+						{
+							"name": "Unread Count",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{accessToken}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/messages/unread/count",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"messages",
+										"unread",
+										"count"
+									]
+								},
+								"description": "Get count of unread messages for current user\n\n**Use for:**\n- Badge notifications\n- UI indicators\n- Push notification decisions\n\n**Returns:** Simple count number"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\n  \"success\": true,\n  \"data\": 5\n}"
+						}
+					]
+				},
+				{
+					"name": "Mark Message as Read",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/messages/1/read",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"messages",
+								"1",
+								"read"
+							]
+						},
+						"description": "Mark specific message as read\n\n**Access Control:**\n- Only recipient can mark as read\n- Sets isRead = true\n- Updates readAt timestamp\n- Changes status to READ\n\n**Use for:**\n- Read receipts\n- Message state management"
+					},
+					"response": []
+				}
+			],
+			"description": "Send, retrieve, and manage encrypted messages"
+		},
+		{
+			"name": "🔧 System & Health",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/actuator/health",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"actuator",
+								"health"
+							]
+						},
+						"description": "Check API health status\n\n**Returns:**\n- Overall health status\n- Database connectivity\n- Component status\n\n**Use for:**\n- Monitoring\n- Load balancer health checks\n- System diagnostics"
+					},
+					"response": [
+						{
+							"name": "Healthy System",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/actuator/health",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"actuator",
+										"health"
+									]
+								},
+								"description": "Check API health status\n\n**Returns:**\n- Overall health status\n- Database connectivity\n- Component status\n\n**Use for:**\n- Monitoring\n- Load balancer health checks\n- System diagnostics"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\n  \"status\": \"UP\",\n  \"components\": {\n    \"db\": {\n      \"status\": \"UP\",\n      \"details\": {\n        \"database\": \"MySQL\",\n        \"validationQuery\": \"isValid()\"\n      }\n    },\n    \"diskSpace\": {\n      \"status\": \"UP\",\n      \"details\": {\n        \"total\": 499963174912,\n        \"free\": 91943051264,\n        \"threshold\": 10485760,\n        \"path\": \"/.\"\n      }\n    }\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "Application Info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/actuator/info",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"actuator",
+								"info"
+							]
+						},
+						"description": "Get application information\n\n**Returns:**\n- Application name and version\n- Build information\n- Git commit details\n\n**Use for:**\n- Version verification\n- Deployment tracking\n- Support diagnostics"
+					},
+					"response": []
+				}
+			],
+			"description": "System health and monitoring endpoints"
+		},
+		{
+			"name": "📋 Testing Scenarios",
+			"item": [
+				{
+					"name": "Complete User Registration Flow",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"girayaksakal\",\n  \"email\": \"girayaksakal@icloud.com\",\n  \"phoneNumber\": \"+905533521756\",\n  \"password\": \"Giray123!\",\n  \"publicKey\": \"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEANTlOkT4Q7K4lR8+Gi/bHQ8e2F3kJ9L0mN1pO2qR3sT4u5V6wX7y8Z9a0B1c2D3e4F5g6H7i8J9k0L1m2N3o4P5q==\",\n  \"bio\": \"Cryptography enthusiast and secure communication advocate\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						},
+						"description": "🔄 **Complete Registration Workflow:**\n\n1. **Register User** (this request)\n2. **Generate Email OTP** → `/otp/generate`\n3. **Verify OTP** → `/otp/verify`\n4. **Login** → `/auth/login`\n5. **Update Profile** → `/users/profile`\n\n**Test Steps:**\n1. Send this registration request\n2. Copy email from response\n3. Generate OTP for that email\n4. Check email for OTP code\n5. Verify OTP to activate account"
+					},
+					"response": []
+				},
+				{
+					"name": "Complete Messaging Flow",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"recipientId\": \"{{userId}}\",\n  \"encryptedContent\": \"U2FsdGVkX19QxZ5PiOlY8JyAjp6tT2KrJ+UYz+4RjhJ+Ym5zNjE3ZTQ0MTIwZjQ=\",\n  \"contentHash\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"transmissionMode\": \"INTERNET\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/messages/send",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"messages",
+								"send"
+							]
+						},
+						"description": "🔄 **Complete Messaging Workflow:**\n\n1. **Search Users** → Find recipient\n2. **Get User Public Key** → For encryption\n3. **Send Message** (this request)\n4. **Retrieve Message** → Verify delivery\n5. **Mark as Read** → Update status\n\n**Encryption Flow:**\n1. Perform ECDH with recipient's public key\n2. Derive shared secret\n3. Encrypt message with AES-256-GCM\n4. Generate content hash (SHA-256)\n5. Send encrypted content + hash"
+					},
+					"response": []
+				},
+				{
+					"name": "Error Testing - Invalid Token",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer invalid_token_here"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users/me",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"me"
+							]
+						},
+						"description": "🧪 **Error Testing Scenarios:**\n\n**Test Different Error Cases:**\n1. Invalid JWT token (this request)\n2. Expired token\n3. Missing authorization header\n4. Invalid request data\n5. User not found\n6. Insufficient permissions\n\n**Expected Response:**\n- Status: 401 Unauthorized\n- Error message in response body"
+					},
+					"response": []
+				}
+			],
+			"description": "Complete workflow examples and testing scenarios"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Pre-request script runs before each request",
+					"console.log('🚀 GEMBOS API Request:', pm.info.requestName);",
+					"",
+					"// Log current tokens for debugging",
+					"const accessToken = pm.collectionVariables.get('accessToken');",
+					"if (accessToken) {",
+					"    console.log('🔑 Using access token:', accessToken.substring(0, 20) + '...');",
+					"} else {",
+					"    console.log('⚠️  No access token found - make sure to login first');",
+					"}"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Post-request script runs after each request",
+					"console.log('📡 Response Status:', pm.response.code, pm.response.status);",
+					"",
+					"// Log response time",
+					"console.log('⏱️  Response Time:', pm.response.responseTime + 'ms');",
+					"",
+					"// Basic response validation",
+					"pm.test('Response status is success', function () {",
+					"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+					"});",
+					"",
+					"// Check response structure",
+					"pm.test('Response has correct structure', function () {",
+					"    const jsonData = pm.response.json();",
+					"    pm.expect(jsonData).to.have.property('success');",
+					"    pm.expect(jsonData).to.have.property('timestamp');",
+					"});",
+					"",
+					"// Log important response data",
+					"if (pm.response.code === 200 || pm.response.code === 201) {",
+					"    const response = pm.response.json();",
+					"    if (response.success) {",
+					"        console.log('✅ Request successful');",
+					"        if (response.data) {",
+					"            console.log('📦 Response data keys:', Object.keys(response.data));",
+					"        }",
+					"    } else {",
+					"        console.log('❌ Request failed:', response.error);",
+					"    }",
+					"} else {",
+					"    console.log('❌ HTTP Error:', pm.response.code, pm.response.status);",
+					"}"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080/api/v1"
+		},
+		{
+			"key": "accessToken",
+			"value": ""
+		},
+		{
+			"key": "refreshToken",
+			"value": ""
+		},
+		{
+			"key": "userId",
+			"value": ""
+		}
+	]
+}
