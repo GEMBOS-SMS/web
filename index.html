@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEMBOS - Global Encrypted Mobile-Based Obscured SMS</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Header -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="logo-icon">🔐</span>
+                <span class="logo-text">GEMBOS</span>
+                <span class="version-badge">v1.0</span>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#overview" class="nav-link">Overview</a>
+                <a href="#documentation" class="nav-link">Documentation</a>
+                <a href="#api" class="nav-link">API Reference</a>
+                <a href="#downloads" class="nav-link">Downloads</a>
+                <a href="#community" class="nav-link">Community</a>
+                <div class="nav-github">
+                    <a href="https://github.com/GEMBOS-SMS" class="github-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        GitHub
+                    </a>
+                </div>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="hero-highlight">GEMBOS</span>
+                    <span class="hero-subtitle">Global Encrypted Mobile-Based<br>Obscured SMS Application</span>
+                </h1>
+                <p class="hero-description">
+                    A secure, distributed messaging system with end-to-end encryption, dual transmission modes, 
+                    and seamless offline synchronization. Built with modern cryptographic standards and 
+                    distributed architecture principles.
+                </p>
+                <div class="hero-actions">
+                    <a href="#documentation" class="btn-primary">Get Started</a>
+                    <a href="documents/GEMBOS-DSD-v2.0.pdf" class="btn-secondary">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                            <polyline points="7,10 12,15 17,10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        Download Specs
+                    </a>
+                </div>
+                <div class="hero-features">
+                    <div class="feature-pill">End-to-End Encryption</div>
+                    <div class="feature-pill">Dual Transmission</div>
+                    <div class="feature-pill">Offline Sync</div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="code-preview">
+                    <div class="code-header">
+                        <div class="code-dots">
+                            <span></span><span></span><span></span>
+                        </div>
+                        <span class="code-title">EncryptionManager.swift</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code><span class="keyword">func</span> <span class="function">encryptMessage</span>(<span class="parameter">message</span>: <span class="type">String</span>, 
+                       <span class="parameter">sharedSecret</span>: <span class="type">Data</span>) -> <span class="type">String</span>? {
+    <span class="keyword">guard let</span> <span class="variable">messageData</span> = message.<span class="method">data</span>(using: .<span class="constant">utf8</span>) 
+    <span class="keyword">else</span> { <span class="keyword">return nil</span> }
+    
+    <span class="comment">// Derive AES key using HKDF</span>
+    <span class="keyword">let</span> <span class="variable">aesKey</span> = <span class="type">HKDF</span>&lt;<span class="type">SHA256</span>&gt;.<span class="method">deriveKey</span>(
+        inputKeyMaterial: <span class="type">SymmetricKey</span>(data: sharedSecret),
+        outputByteCount: <span class="number">32</span>
+    )
+    
+    <span class="keyword">do</span> {
+        <span class="keyword">let</span> <span class="variable">sealedBox</span> = <span class="keyword">try</span> <span class="type">AES</span>.<span class="type">GCM</span>.<span class="method">seal</span>(messageData, using: aesKey)
+        <span class="keyword">return</span> sealedBox.combined?.<span class="method">base64EncodedString</span>()
+    } <span class="keyword">catch</span> {
+        <span class="method">print</span>(<span class="string">"Encryption failed: \(error)"</span>)
+        <span class="keyword">return nil</span>
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section id="overview" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Project Overview</h2>
+                <p>GEMBOS addresses critical security challenges in modern mobile communication protocol SS7 through innovative cryptographic solutions and distributed architecture.</p>
+            </div>
+            
+            <div class="overview-grid">
+                <div class="overview-card">
+                    <div class="card-icon">🔐</div>
+                    <h3>Security First</h3>
+                    <p>Implements Elliptic Curve Cryptography (ECC) with AES-128-GCM encryption, ensuring military-grade security for all communications.</p>
+                    <ul>
+                        <li>End-to-end encryption</li>
+                        <li>Perfect forward secrecy</li>
+                        <li>Secure key exchange protocols</li>
+                    </ul>
+                </div>
+                
+                <div class="overview-card">
+                    <div class="card-icon">📡</div>
+                    <h3>Dual Transmission</h3>
+                    <p>Seamless switching between SMS messaging and internet-based messaging fallback ensures reliable communication in any network condition.</p>
+                    <ul>
+                        <li>SMS based messaging</li>
+                        <li>Internet-based fallback capability</li>
+                    </ul>
+                </div>
+                
+                <div class="overview-card">
+                    <div class="card-icon">🔄</div>
+                    <h3>Distributed Architecture</h3>
+                    <p>Scalable, distributed system design with offline support and automatic synchronization across multiple devices.</p>
+                    <ul>
+                        <li>Offline message storage</li>
+                        <li>Automatic synchronization</li>
+                        <li>Multi-device support</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="architecture-diagram">
+                <h3>System Architecture</h3>
+                <div class="diagram-container">
+                    <div class="layer">
+                        <div class="layer-title">Presentation Layer</div>
+                        <div class="layer-content">
+                            <!-- <div class="component">iOS App (Swift)</div> -->
+                            <div class="component">Android App (Java)</div>
+                        </div>
+                    </div>
+                    <div class="layer">
+                        <div class="layer-title">Application Layer</div>
+                        <div class="layer-content">
+                            <div class="component">Spring Boot API</div>
+                            <div class="component">Encryption Service</div>
+                            <div class="component">Message Service</div>
+                        </div>
+                    </div>
+                    <div class="layer">
+                        <div class="layer-title">Data Layer</div>
+                        <div class="layer-content">
+                            <div class="component">MySQL Database</div>
+                            <div class="component">Local Storage</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- API Reference Section -->
+    <section id="api" class="section section-dark">
+        <div class="container">
+            <div class="section-header">
+                <h2>API Reference</h2>
+                <p>Complete API documentation for integrating with GEMBOS services.</p>
+            </div>
+
+            <div class="api-explorer">
+                <div class="api-sidebar">
+                    <div class="api-group">
+                        <h4>Authentication</h4>
+                        <a href="#auth-register" class="api-link active">POST /auth/register</a>
+                        <a href="#auth-login" class="api-link">POST /auth/login</a>
+                        <a href="#auth-refresh" class="api-link">POST /auth/refresh</a>
+                    </div>
+                    <div class="api-group">
+                        <h4>Messaging</h4>
+                        <a href="#msg-send" class="api-link">POST /messages/send</a>
+                        <a href="#msg-get" class="api-link">GET /messages/{id}</a>
+                        <a href="#msg-conversation" class="api-link">GET /messages/conversation</a>
+                    </div>
+                    <div class="api-group">
+                        <h4>User Management</h4>
+                        <a href="#user-profile" class="api-link">GET /users/me</a>
+                        <a href="#user-search" class="api-link">GET /users/search</a>
+                    </div>
+                    <div class="api-group">
+                        <h4>OTP & Verification</h4>
+                        <a href="#otp-generate" class="api-link">POST /otp/generate</a>
+                        <a href="#otp-verify" class="api-link">POST /otp/verify</a>
+                    </div>
+                </div>
+
+                <div class="api-content"> </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Documentation Section -->
+    <section id="documentation" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Documentation</h2>
+                <p>Comprehensive guides and specifications for understanding and implementing GEMBOS.</p>
+            </div>
+
+            <div class="docs-grid">
+                <div class="doc-card">
+                    <div class="doc-icon">📋</div>
+                    <h3>Requirements Specification</h3>
+                    <p>Complete project requirements, functional specifications, and system constraints.</p>
+                    <div class="doc-meta">
+                        <span class="doc-version">v1.5</span>
+                        <span class="doc-size">2.3 MB</span>
+                    </div>
+                    <a href="documents/GEMBOS-RSD-v1.5.pdf" class="doc-download">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                            <polyline points="7,10 12,15 17,10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        Download PDF
+                    </a>
+                </div>
+
+                <div class="doc-card">
+                    <div class="doc-icon">🏗️</div>
+                    <h3>Design Specifications</h3>
+                    <p>Detailed system architecture, component design, and implementation specifications.</p>
+                    <div class="doc-meta">
+                        <span class="doc-version">v2.0</span>
+                        <span class="doc-size">4.1 MB</span>
+                    </div>
+                    <a href="documents/GEMBOS-DSD-v2.0.pdf" class="doc-download">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                            <polyline points="7,10 12,15 17,10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        Download PDF
+                    </a>
+                </div>
+
+                <div class="doc-card">
+                    <div class="doc-icon">🎨</div>
+                    <h3>Interface Guidelines</h3>
+                    <p>User interface design patterns, mockups, and interaction guidelines.</p>
+                    <div class="doc-meta">
+                        <span class="doc-version">v1.0</span>
+                        <span class="doc-size">1.8 MB</span>
+                    </div>
+                    <a href="documents/GEMBOS-GUI-Demo.pdf" class="doc-download">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                            <polyline points="7,10 12,15 17,10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        Download PDF
+                    </a>
+                </div>
+
+                <div class="doc-card">
+                    <div class="doc-icon">⚙️</div>
+                    <h3>API Documentation</h3>
+                    <p>Complete REST API reference with endpoints, parameters, and examples.</p>
+                    <div class="doc-meta">
+                        <span class="doc-version">v1.0</span>
+                        <span class="doc-size">1.2 MB</span>
+                    </div>
+                    <a href="documents/GEMBOS-API-Documentation.pdf" class="doc-download">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                            <polyline points="7,10 12,15 17,10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        Download PDF
+                    </a>
+                </div>
+
+                <div class="doc-card">
+                    <div class="doc-icon">📊</div>
+                    <h3>Project Poster</h3>
+                    <p>Visual overview and summary of the GEMBOS project achievements.</p>
+                    <div class="doc-meta">
+                        <span class="doc-version">Final</span>
+                        <span class="doc-size">3.2 MB</span>
+                    </div>
+                    <a href="documents/GEMBOS-Poster.pdf" class="doc-download">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                            <polyline points="7,10 12,15 17,10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        Download PDF
+                    </a>
+                </div>
+
+                <div class="doc-card">
+                    <div class="doc-icon">📖</div>
+                    <h3>Final Report</h3>
+                    <p>Comprehensive project documentation including results and conclusions.</p>
+                    <div class="doc-meta">
+                        <span class="doc-version">Final</span>
+                        <span class="doc-size">5.7 MB</span>
+                    </div>
+                    <a href="documents/GEMBOS-Final-Report.pdf" class="doc-download">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                            <polyline points="7,10 12,15 17,10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        Download PDF
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Downloads Section -->
+    <section id="downloads" class="section section-dark">
+        <div class="container">
+            <div class="section-header">
+                <h2>Downloads & Source Code</h2>
+                <p>Access source code repositories and development resources.</p>
+            </div>
+
+            <div class="downloads-grid">
+                <div class="repo-card">
+                    <div class="repo-header">
+                        <div class="repo-icon">🤖</div>
+                        <div class="repo-info">
+                            <h3>Android Application</h3>
+                            <p>Native Android app with encryption support</p>
+                        </div>
+                        <div class="repo-lang">Java</div>
+                    </div>
+                    <div class="repo-stats">
+                        <div class="stat">
+                            <span class="stat-icon">⭐</span>
+                            <span>38</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-icon">🍴</span>
+                            <span>9</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-icon">📄</span>
+                            <span>MIT</span>
+                        </div>
+                    </div>
+                    <div class="repo-actions">
+                        <a href="https://github.com/GEMBOS-SMS/android" class="btn-outline">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                            View Repository
+                        </a>
+                    </div>
+                </div>
+
+                <div class="repo-card">
+                    <div class="repo-header">
+                        <div class="repo-icon">⚙️</div>
+                        <div class="repo-info">
+                            <h3>Backend API</h3>
+                            <p>Spring Boot API with JWT authentication</p>
+                        </div>
+                        <div class="repo-lang">Java</div>
+                    </div>
+                    <div class="repo-stats">
+                        <div class="stat">
+                            <span class="stat-icon">⭐</span>
+                            <span>56</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-icon">🍴</span>
+                            <span>18</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-icon">📄</span>
+                            <span>MIT</span>
+                        </div>
+                    </div>
+                    <div class="repo-actions">
+                        <a href="https://github.com/GEMBOS-SMS/api" class="btn-outline">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                            View Repository
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Section -->
+    <section id="community" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Community & Team</h2>
+                <p>Meet the development team and learn how to contribute to the GEMBOS project.</p>
+            </div>
+
+            <div class="team-section">
+                <h3>Development Team</h3>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <span>BV</span>
+                        </div>
+                        <div class="member-info">
+                            <h4>Berker Vergi</h4>
+                            <p class="member-role">Senior Year Computer Engineering Student</p>
+                            <p class="member-id">21070001202</p>
+                            <div class="member-links">
+                                <a href="mailto:21070001202@stu.yasar.edu.tr" class="contact-link">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                        <polyline points="22,6 12,13 2,6"/>
+                                    </svg>
+                                    Email
+                                </a>
+                                <a href="https://github.com/berkervergi" class="contact-link">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                                    </svg>
+                                    GitHub
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <span>GA</span>
+                        </div>
+                        <div class="member-info">
+                            <h4>Giray Aksakal</h4>
+                            <p class="member-role">Senior Year Computer Engineering Student</p>
+                            <p class="member-id">21070001030</p>
+                            <div class="member-links">
+                                <a href="mailto:21070001030@stu.yasar.edu.tr" class="contact-link">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                        <polyline points="22,6 12,13 2,6"/>
+                                    </svg>
+                                    Email
+                                </a>
+                                <a href="https://github.com/girayaksakal" class="contact-link">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                                    </svg>
+                                    GitHub
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="advisor-section">
+                <h3>Project Supervision</h3>
+                <div class="advisor-card">
+                    <div class="advisor-avatar">
+                        <span>AHK</span>
+                    </div>
+                    <div class="advisor-info">
+                        <h4>Prof. Dr. Ahmet Hasan Koltuksuz</h4>
+                        <p class="advisor-title">Project Advisor</p>
+                        <p class="advisor-dept">Department of Computer Engineering</p>
+                        <p class="advisor-uni">Yaşar University</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="institution-info">
+                <div class="institution-card">
+                    <div class="institution-logo">🎓</div>
+                    <div class="institution-details">
+                        <h4>Yaşar University</h4>
+                        <p>Department of Computer Engineering</p>
+                        <p>COMP4920 Senior Design Project II</p>
+                        <p>Spring 2025</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contribute-section">
+                <h3>Contributing</h3>
+                <p>GEMBOS is an open-source project. We welcome contributions from the community.</p>
+                <div class="contribute-grid">
+                    <div class="contribute-card">
+                        <div class="contribute-icon">🐛</div>
+                        <h4>Report Issues</h4>
+                        <p>Found a bug or have a feature request? Open an issue on GitHub.</p>
+                        <a href="https://github.com/yourusername/gembos/issues" class="contribute-link">Report Issue</a>
+                    </div>
+                    <div class="contribute-card">
+                        <div class="contribute-icon">🔧</div>
+                        <h4>Submit Pull Requests</h4>
+                        <p>Contribute code improvements and new features to the project.</p>
+                        <a href="https://github.com/yourusername/gembos/pulls" class="contribute-link">Create PR</a>
+                    </div>
+                    <div class="contribute-card">
+                        <div class="contribute-icon">📖</div>
+                        <h4>Improve Documentation</h4>
+                        <p>Help us improve the documentation and guides.</p>
+                        <a href="https://github.com/yourusername/gembos-docs" class="contribute-link">Edit Docs</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-brand">
+                        <span class="logo-icon">🔐</span>
+                        <span class="logo-text">GEMBOS</span>
+                    </div>
+                    <p>Secure messaging with end-to-end encryption and distributed architecture.</p>
+                    <div class="footer-social">
+                        <a href="https://github.com/yourusername/gembos" class="social-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Documentation</h4>
+                    <ul class="footer-links">
+                        <li><a href="#overview">Overview</a></li>
+                        <li><a href="documents/GEMBOS-RSD-v1.5.pdf">Requirements</a></li>
+                        <li><a href="documents/GEMBOS-DSD-v2.0.pdf">Design Specs</a></li>
+                        <li><a href="#api">API Reference</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="#downloads">Downloads</a></li>
+                        <li><a href="https://github.com/yourusername/gembos">Source Code</a></li>
+                        <li><a href="documents/GEMBOS-Final-Report.pdf">Final Report</a></li>
+                        <li><a href="documents/GEMBOS-Presentation.pdf">Presentation</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <ul class="footer-links">
+                        <li><a href="mailto:21070001202@stu.yasar.edu.tr">Berker Vergi</a></li>
+                        <li><a href="mailto:21070001030@stu.yasar.edu.tr">Giray Aksakal</a></li>
+                        <li><a href="#community">Team Info</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    <p>&copy; 2025 GEMBOS Project. Licensed under MIT License.</p>
+                    <p>Yaşar University - Department of Computer Engineering</p>
+                </div>
+                <div class="footer-meta">
+                    <span>Built with ❤️ for secure communication</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
